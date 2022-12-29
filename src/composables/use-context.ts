@@ -18,6 +18,7 @@ export interface Context<T = any> {
   Provider: DefineComponent<ProviderProps<T>>
   Consumer: DefineComponent
   useContextValue: UseContextValue<T>
+  useContextProvider: (value: T) => void
 }
 
 export interface UseContext {
@@ -26,12 +27,16 @@ export interface UseContext {
   <T>(context: Context<T>, defaultValue: T | (() => T), treatDefaultAsFactory: true): ComputedRef<T>
 }
 
-export const useContext = ((context) => context.useContextValue()) as UseContext
+export const useContext: UseContext = (context) => context.useContextValue()
 
 export function createContext<T = any>(defaultValue?: T, customKey?: string | symbol): Context<T> {
   const contextKey = createInjectKey<Ref<T>>(customKey ?? Symbol())
 
-  const useContextValue = inject.bind(null, contextKey) as Context<T>['useContextValue']
+  const useContextValue = <Context<T>['useContextValue']>inject.bind(null, contextKey)
+
+  const useContextProvider = <Context<T>['useContextProvider']>((newValue) => {
+    provide(contextKey, computed(() => newValue ?? defaultValue) as ComputedRef<T>)
+  })
 
   const Provider = defineComponent({
     name: 'Provider',
@@ -39,10 +44,7 @@ export function createContext<T = any>(defaultValue?: T, customKey?: string | sy
       value: required(definePropType<T>())
     },
     setup(props, { slots }) {
-      provide(
-        contextKey,
-        computed(() => (props as ProviderProps<T>).value ?? defaultValue) as ComputedRef<T>
-      )
+      useContextProvider((props as ProviderProps<T>).value)
       return () => slots.default?.()
     }
   })
@@ -58,6 +60,7 @@ export function createContext<T = any>(defaultValue?: T, customKey?: string | sy
   return {
     Provider,
     Consumer,
-    useContextValue
+    useContextValue,
+    useContextProvider
   } as unknown as Context<T>
 }

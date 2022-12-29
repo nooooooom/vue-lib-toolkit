@@ -8,12 +8,12 @@ specifiers:
   vitest: ^0.23.1
   vue: ^3.2.7
   vue-demi: '*'
-  vue-reactivity-fantasy: ^0.0.4
+  vue-reactivity-fantasy: ^0.0.7
 
 dependencies:
   '@vue/shared': 3.2.45
   vue-demi: 0.13.11_vue@3.2.45
-  vue-reactivity-fantasy: 0.0.4_mgnvym7yiazkylwwogi5r767ue
+  vue-reactivity-fantasy: 0.0.7_mgnvym7yiazkylwwogi5r767ue
 
 devDependencies:
   typescript: 4.9.3
@@ -1836,17 +1836,19 @@ packages:
       vue: 3.2.45
     dev: false
 
-  /vue-reactivity-fantasy/0.0.4_mgnvym7yiazkylwwogi5r767ue:
-    resolution: {integrity: sha512-74enHNnkO1Cp/HP/2bnNbyFRhh/aUl/L6xL3WMNmVjh6FL2HfKKFujQOK8D2zQ9CBIGQlRbAyTnvHoCG2bqFqg==}
+  /vue-reactivity-fantasy/0.0.7_mgnvym7yiazkylwwogi5r767ue:
+    resolution: {integrity: sha512-39A3zWAPgYUTiDHOwhmgnF50PTxsFxt0H5Dxnft9XOzrLzpe6kQfL40KlPO9El5CdwJjmB7v2BhXdBfiYsdVxg==}
     peerDependencies:
+      '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
-      vue: '>=2.7.0 || ^3.2.0'
+      vue: ^2.6.14 || ^3.2.0
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
       typescript: 4.9.3
       vue: 3.2.45
+      vue-demi: 0.13.11_vue@3.2.45
     dev: false
 
   /vue/3.2.45:

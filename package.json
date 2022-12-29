@@ -34,7 +34,7 @@
   "dependencies": {
     "@vue/shared": "^3.2.7",
     "vue-demi": "*",
-    "vue-reactivity-fantasy": "^0.0.4"
+    "vue-reactivity-fantasy": "^0.0.7"
   },
   "devDependencies": {
     "typescript": "^4.7.4",
