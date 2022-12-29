@@ -1,6 +1,6 @@
 {
   "name": "vue-demi-toolkit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Toolkits to convenience create universal library compatible with Vue2 & 3.",
   "keywords": [
     "Vue",
