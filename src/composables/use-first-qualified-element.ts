@@ -3,8 +3,8 @@ import { findChild, isVNode, resolveVNodeElement } from '../vnode'
 import { useVNode } from './useVNode'
 
 export function useFirstQualifiedElement<T extends Element = Element>(
-  instance = getCurrentInstance(),
-  qualifier: (node: Element) => boolean
+  qualifier: (node: Element) => boolean,
+  instance = getCurrentInstance()
 ) {
   const vnode = useVNode(instance)
 
