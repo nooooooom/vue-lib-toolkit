@@ -1,6 +1,6 @@
 import { ComputedRef, getCurrentInstance, onMounted, onUpdated, VNode } from 'vue'
 import { useMemo } from 'vue-reactivity-fantasy'
-import { getVNode } from '../compat'
+import { resolveVNode } from '../vnode'
 import { useLifecycleTrack } from './use-lifecycle-track'
 
 export function useVNode<T extends VNode = VNode>(
@@ -9,7 +9,7 @@ export function useVNode<T extends VNode = VNode>(
   const trackMounted = useLifecycleTrack(onMounted, instance)
   const trackUpdated = useLifecycleTrack(onUpdated, instance)
 
-  const vnode = useMemo(() => getVNode<T>(instance), [trackMounted, trackUpdated])
+  const vnode = useMemo(() => resolveVNode<T>(instance), [trackMounted, trackUpdated])
 
   return vnode
 }

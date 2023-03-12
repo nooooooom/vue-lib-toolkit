@@ -9,7 +9,6 @@
     "importsNotUsedAsValues": "error",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "types": ["vitest", "vitest/globals"]
+    "baseUrl": "."
   }
 }
