@@ -2,7 +2,7 @@
   "name": "vue-lib-toolkit",
   "version": "0.0.1",
   "author": "nooooooom <https://github.com/nooooooom>",
-  "description": "Toolkits to convenience create universal library compatible with Vue2 & 3.",
+  "description": "🧰 Toolkits to convenience create universal library compatible with Vue2 & 3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

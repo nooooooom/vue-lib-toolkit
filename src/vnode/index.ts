@@ -1,5 +1,5 @@
 import type { VNode } from 'vue'
-import { isVue2 } from '../utils/version'
+import { isVue2 } from '../version'
 import type { ComponentInternalInstance } from '../types'
 
 export * from './children'

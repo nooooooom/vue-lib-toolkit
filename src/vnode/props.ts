@@ -4,13 +4,12 @@ import {
   isFunction,
   isObject,
   isOn,
-  isPlainObject,
   normalizeClass,
   normalizeStyle
 } from '@vue/shared'
 import type { Ref, VNode } from 'vue'
 import { cloneVNode as leading_cloneVNode } from 'vue'
-import { isVue2 } from '../utils/version'
+import { isVue2 } from '../version'
 import { isVNode } from './types'
 
 export const cloneVNode = isVue2 ? legacy_cloneVNode : leading_cloneVNode
