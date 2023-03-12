@@ -20,7 +20,7 @@ export function createContext<T = any>(defaultValue?: T, key?: string | symbol):
   const contextKey = createInjectKey<Ref<T>>(key ?? Symbol())
 
   const Provider = defineComponent({
-    name: `${contextKey}Provider`,
+    name: `${contextKey.toString()}Provider`,
     props: {
       value: required(definePropType<T>())
     },
@@ -35,7 +35,7 @@ export function createContext<T = any>(defaultValue?: T, key?: string | symbol):
   })
 
   const Consumer = defineComponent({
-    name: `${contextKey}Consumer`,
+    name: `${contextKey.toString()}Consumer`,
     setup(props, { slots }) {
       const value = inject(contextKey)!
 
