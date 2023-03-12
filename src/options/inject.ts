@@ -11,7 +11,7 @@ interface ProviderProps<T> {
 export type Provider<T> = DefineComponent<ProviderProps<T>>
 
 export interface Context<T = any> {
-  key: InjectionKey<T>
+  key: InjectionKey<Ref<T>>
   Provider: DefineComponent<ProviderProps<T>>
   Consumer: DefineComponent
 }

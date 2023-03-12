@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@vue/shared": "^3.2.0",
-    "vue-module-demi": "^0.0.3",
+    "vue-module-demi": "^0.0.4",
     "vue-reactivity-fantasy": "^0.0.7"
   },
   "devDependencies": {
