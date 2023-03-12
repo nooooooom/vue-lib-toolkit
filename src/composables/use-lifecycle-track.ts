@@ -1,14 +1,14 @@
-import { getCurrentInstance } from 'vue-demi'
+import { getCurrentInstance } from 'vue'
 import { useForceUpdate } from 'vue-reactivity-fantasy'
 
 import type { ComponentInternalInstance } from '../types'
 
-export type LifecycleHook = (hook: () => any, target?: ComponentInternalInstance) => void
+export type LifecycleHook = (hook: () => any, target?: ComponentInternalInstance | null) => void
 
-export function useLifecycleTrack(hook: LifecycleHook, target = getCurrentInstance()) {
+export function useLifecycleTrack(hook: LifecycleHook, currentInstance = getCurrentInstance()) {
   const [track, trigger] = useForceUpdate()
 
-  hook(trigger, target)
+  hook(trigger, currentInstance)
 
   return track as () => number
 }

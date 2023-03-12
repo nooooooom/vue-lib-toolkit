@@ -1,18 +1,17 @@
-import { isObject } from '@vue/shared'
-import { computed, getCurrentInstance } from 'vue-demi'
-
-import { findChild, resolveVNodeElement } from '../vnode'
-import { useComponentVNode } from './use-component-vnode'
+import { computed, getCurrentInstance } from 'vue'
+import { findChild, isVNode, resolveVNodeElement } from '../vnode'
+import { useVNode } from './useVNode'
 
 export function useFirstQualifiedElement<T extends Element = Element>(
   instance = getCurrentInstance(),
-  qualifier: (vnode: Element) => boolean
+  qualifier: (node: Element) => boolean
 ) {
-  const vnodeRef = useComponentVNode(instance)
+  const vnode = useVNode(instance)
+
   return computed(() => {
     let element: T | null | undefined
-    findChild(vnodeRef.value, (child) => {
-      const resolved = isObject(child) && resolveVNodeElement<T>(child)
+    findChild(vnode.value, (child) => {
+      const resolved = isVNode(child) && resolveVNodeElement<T>(child)
       if (resolved && qualifier(resolved)) {
         element = resolved
         return true

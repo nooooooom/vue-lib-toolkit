@@ -1,6 +1,3 @@
 export * from './children'
-export * from './cloneVNode'
-export * from './is'
 export * from './props'
-export * from './resolve'
-export * from './shapeFlags'
+export * from './types'

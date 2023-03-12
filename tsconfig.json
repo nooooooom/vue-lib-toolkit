@@ -11,6 +11,5 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "types": ["vitest", "vitest/globals"]
-  },
-  "exclude": ["node_modules"]
+  }
 }

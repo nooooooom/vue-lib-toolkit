@@ -1,14 +1,17 @@
-import { isVue3, VNode } from 'vue-demi'
+import type { VNode } from 'vue'
 import { isArray, isObject } from '@vue/shared'
-
-import { toArray } from '../utils'
+import { isVue2, isVue3 } from '../utils/version'
 import type { MaybeArray } from '../types'
-import { ShapeFlags } from './shapeFlags'
+import { ShapeFlags } from './types'
 
 export type VNodeChildAtom = VNode | string | number | boolean | null | undefined | void
 
+function toArray<T>(value?: MaybeArray<T>): Array<T> {
+  return value != null ? (isArray(value) ? value : ([value] as Array<T>)) : []
+}
+
 export function hasArrayChildren(vnode: VNode) {
-  return isVue3 ? !!(vnode.shapeFlag & ShapeFlags.ARRAY_CHILDREN) : isArray(vnode.children)
+  return isVue2 ? isArray(vnode.children) : !!(vnode.shapeFlag & ShapeFlags.ARRAY_CHILDREN)
 }
 
 export function forEachChildren(
@@ -19,14 +22,14 @@ export function forEachChildren(
     return
   }
 
-  let isBreaked = false
-  const breakEach = () => (isBreaked = true)
+  let isBreak = false
+  const breakEach = () => (isBreak = true)
 
   const each = (children: Array<VNodeChildAtom>) => {
     for (const child of children) {
       if (!isObject(child)) {
         callbackfn(child, breakEach)
-        if (isBreaked) {
+        if (isBreak) {
           return
         }
         continue
@@ -40,7 +43,7 @@ export function forEachChildren(
       }
 
       callbackfn(child, breakEach)
-      if (isBreaked) {
+      if (isBreak) {
         return
       }
 
