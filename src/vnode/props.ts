@@ -8,8 +8,8 @@ import {
   normalizeClass,
   normalizeStyle
 } from '@vue/shared'
-import type { Ref, VNode } from 'vue'
-import { cloneVNode as leading_cloneVNode } from 'vue'
+import type { Ref, VNode } from 'vue-module-demi'
+import { cloneVNode as leading_cloneVNode } from 'vue-module-demi'
 import { isVue2 } from '../version'
 import { isVNode } from './types'
 

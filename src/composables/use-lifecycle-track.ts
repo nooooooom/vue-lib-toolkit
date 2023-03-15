@@ -1,4 +1,4 @@
-import { getCurrentInstance } from 'vue'
+import { getCurrentInstance } from 'vue-module-demi'
 import { useForceUpdate } from 'vue-reactivity-fantasy'
 
 import type { ComponentInternalInstance } from '../types'

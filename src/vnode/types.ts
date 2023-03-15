@@ -1,7 +1,7 @@
 import { isObject, isPlainObject, isString } from '@vue/shared'
 import { Comment, Fragment, Text } from 'vue-module-demi'
-import type { VNode } from 'vue'
-import { isVNode as leading_isVNode } from 'vue'
+import type { VNode } from 'vue-module-demi'
+import { isVNode as leading_isVNode } from 'vue-module-demi'
 import { isVue3, isVue2 } from '../version'
 import { resolveVNodeType } from './props'
 

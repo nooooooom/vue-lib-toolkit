@@ -1,4 +1,4 @@
-import type { VNode } from 'vue'
+import type { VNode } from 'vue-module-demi'
 import { isVue2 } from '../version'
 import type { ComponentInternalInstance } from '../types'
 

@@ -1,4 +1,4 @@
-import { ComputedRef, getCurrentInstance, onMounted, onUpdated, ref, VNode } from 'vue'
+import { ComputedRef, getCurrentInstance, onMounted, onUpdated, ref, VNode } from 'vue-module-demi'
 import { useComputed, useEffect } from 'vue-reactivity-fantasy'
 import { resolveVNode } from '../vnode'
 import { useLifecycleTrack } from './use-lifecycle-track'

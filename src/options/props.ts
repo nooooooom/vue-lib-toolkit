@@ -1,5 +1,5 @@
 import { isArray, isPlainObject } from '@vue/shared'
-import type { ComponentPropsOptions, PropType } from 'vue'
+import type { ComponentPropsOptions, PropType } from 'vue-module-demi'
 
 export type ResolvePropConstructor<T> = T extends string
   ? StringConstructor

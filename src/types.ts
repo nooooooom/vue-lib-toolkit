@@ -1,4 +1,4 @@
-import type { getCurrentInstance, Ref } from 'vue'
+import type { getCurrentInstance, Ref } from 'vue-module-demi'
 
 export type ComponentInternalInstance = NonNullable<ReturnType<typeof getCurrentInstance>>
 

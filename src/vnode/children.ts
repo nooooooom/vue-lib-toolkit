@@ -1,4 +1,4 @@
-import type { VNode } from 'vue'
+import type { VNode } from 'vue-module-demi'
 import { isArray, isObject } from '@vue/shared'
 import { isVue2, isVue3 } from '../version'
 import type { MaybeArray } from '../types'

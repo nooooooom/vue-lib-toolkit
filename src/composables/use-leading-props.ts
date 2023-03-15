@@ -1,6 +1,6 @@
 import { isEventKey, toListenerKey } from '../vnode'
 import { isVue2 } from '../version'
-import { shallowRef } from 'vue'
+import { shallowRef } from 'vue-module-demi'
 import { useEffect } from 'vue-reactivity-fantasy'
 
 export interface UseCompatPropsCtx {
@@ -11,7 +11,7 @@ export interface UseCompatPropsCtx {
 export function useLeadingProps<T extends Record<string, any>>(
   rawProps: T,
   ctx: UseCompatPropsCtx
-) {
+): T {
   if (isVue2) {
     const eventKeys = Object.keys(rawProps).filter(isEventKey)
     const eventProps = eventKeys.reduce((props, event) => {
@@ -32,7 +32,7 @@ export function useLeadingProps<T extends Record<string, any>>(
       Object.assign(compatProps, rawProps, eventProps)
     })
 
-    return compatProps
+    return compatProps as T
   }
 
   return rawProps

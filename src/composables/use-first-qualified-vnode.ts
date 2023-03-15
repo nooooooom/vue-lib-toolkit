@@ -1,4 +1,4 @@
-import { computed, getCurrentInstance, VNode } from 'vue'
+import { computed, getCurrentInstance, VNode } from 'vue-module-demi'
 import { findChild, VNodeChildAtom } from '../vnode'
 import { useVNode } from './useVNode'
 

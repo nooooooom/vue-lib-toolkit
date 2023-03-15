@@ -1,4 +1,4 @@
-import { computed, defineComponent, DefineComponent, inject, InjectionKey, provide, Ref } from 'vue'
+import { computed, defineComponent, DefineComponent, inject, InjectionKey, provide, Ref } from 'vue-module-demi'
 import { definePropType, required } from './props'
 
 export function createInjectKey<T>(key: symbol | string): InjectionKey<T> {
