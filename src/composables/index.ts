@@ -1,3 +1,4 @@
+export * from './use-leading-props'
 export * from './use-first-qualified-element'
 export * from './use-first-qualified-vnode'
 export * from './use-lifecycle-track'

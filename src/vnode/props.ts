@@ -1,5 +1,6 @@
 import {
   capitalize,
+  hyphenate,
   isArray,
   isFunction,
   isObject,
@@ -36,8 +37,10 @@ export function toEventKey(event: string) {
 // onEvent -> event
 export function toListenerKey(event: string) {
   if (isEventKey(event)) {
-    event = event.replace(/^on-?/, '')
-    return event.charAt(0).toLowerCase() + event.slice(1)
+    event = event.replace(/^on-?([a-zA-Z])/, ($0, $1) => {
+      return $1 ? $1.toLowerCase() : ''
+    })
+    return hyphenate(event)
   }
 
   return event

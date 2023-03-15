@@ -44,6 +44,7 @@ export function createContext<T = any>(defaultValue?: T, key?: string | symbol):
   })
 
   return {
+    key: contextKey,
     Provider,
     Consumer
   } as unknown as Context<T>
