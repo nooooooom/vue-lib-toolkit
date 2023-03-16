@@ -1,7 +1,15 @@
-import { computed, defineComponent, DefineComponent, inject, InjectionKey, provide, Ref } from 'vue-module-demi'
+import {
+  computed,
+  defineComponent,
+  DefineComponent,
+  inject,
+  InjectionKey,
+  provide as coreProvide,
+  Ref
+} from 'vue-module-demi'
 import { definePropType, required } from './props'
 
-export function createInjectKey<T>(key: symbol | string): InjectionKey<T> {
+export function createInjectionKey<T>(key: symbol | string): InjectionKey<T> {
   return key as InjectionKey<T>
 }
 
@@ -12,39 +20,43 @@ export type Provider<T> = DefineComponent<ProviderProps<T>>
 
 export interface Context<T = any> {
   key: InjectionKey<Ref<T>>
+  use: () => Ref<T> | undefined
+  provide: (value: Ref<T>) => void
   Provider: DefineComponent<ProviderProps<T>>
   Consumer: DefineComponent
 }
 
-export function createContext<T = any>(defaultValue?: T, key?: string | symbol): Context<T> {
-  const contextKey = createInjectKey<Ref<T>>(key ?? Symbol())
+export function createContext<T = any>(
+  defaultValue?: T,
+  injectionKey?: string | symbol
+): Context<T> {
+  const key = createInjectionKey<Ref<T>>(injectionKey ?? Symbol())
+  const use = () => inject(key)
+  const provide = (value: Ref<T>) => coreProvide(key, value)
 
   const Provider = defineComponent({
-    name: `${contextKey.toString()}Provider`,
+    name: `${key.toString()}Provider`,
     props: {
       value: required(definePropType<T>())
     },
     setup(props, { slots }) {
-      provide(
-        contextKey,
-        computed(() => (props as ProviderProps<T>).value ?? (defaultValue as T))
-      )
-
+      provide(computed(() => (props as ProviderProps<T>).value ?? (defaultValue as T)))
       return () => slots.default?.()
     }
   })
 
   const Consumer = defineComponent({
-    name: `${contextKey.toString()}Consumer`,
+    name: `${key.toString()}Consumer`,
     setup(props, { slots }) {
-      const value = inject(contextKey)!
-
+      const value = use()!
       return () => slots.default?.(value.value)
     }
   })
 
   return {
-    key: contextKey,
+    key,
+    use,
+    provide,
     Provider,
     Consumer
   } as unknown as Context<T>
