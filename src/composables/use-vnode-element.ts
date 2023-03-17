@@ -2,7 +2,7 @@ import { isObject } from '@vue/shared'
 import { ComputedRef, getCurrentInstance } from 'vue-module-demi'
 import { useTransformState } from 'vue-reactivity-fantasy'
 import { resolveVNodeElement } from '../vnode'
-import { useVNode } from './useVNode'
+import { useVNode } from './use-vnode'
 
 export function useComponentElement<T extends Element = Element>(
   instance = getCurrentInstance()

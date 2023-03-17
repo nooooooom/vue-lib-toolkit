@@ -1,6 +1,6 @@
 import { computed, getCurrentInstance } from 'vue-module-demi'
 import { findChild, isVNode, resolveVNodeElement } from '../vnode'
-import { useVNode } from './useVNode'
+import { useVNode } from './use-vnode'
 
 export function useFirstQualifiedElement<T extends Element = Element>(
   qualifier: (node: Element) => boolean,
