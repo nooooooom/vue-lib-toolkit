@@ -7,16 +7,22 @@ export function useProps<T>(currentInstance = getCurrentInstance()): T {
   const props = shallowReactive({})
 
   const attrs = computed(() => {
-    const attrs = currentInstance!.proxy?.$attrs
-    if (!attrs) {
+    const $attrs = currentInstance!.proxy?.$attrs
+    if (!$attrs) {
       return {}
     }
-    // make a backup copy of attrs in props format
-    const asProps = {} as Record<string, any>
-    for (const attr of Object.keys(attrs)) {
-      asProps[camelize(attr)] = asProps[attr] = attrs[attr]
+    const attrs = {} as Record<string, any>
+    for (const attr of Object.keys($attrs)) {
+      // make a backup copy of attrs in props format
+      ;[camelize(attr), attr].forEach((key) => {
+        Object.defineProperty(attrs, key, {
+          get() {
+            return $attrs[attr]
+          }
+        })
+      })
     }
-    return asProps
+    return attrs
   })
 
   watchEffect(
