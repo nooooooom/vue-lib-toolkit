@@ -16,6 +16,7 @@ export function useProps<T>(currentInstance = getCurrentInstance()): T {
       // make a backup copy of attrs in props format
       ;[camelize(attr), attr].forEach((key) => {
         Object.defineProperty(attrs, key, {
+          enumerable: true,
           get() {
             return $attrs[attr]
           }
