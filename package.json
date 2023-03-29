@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@vue/shared": "^3.2.0",
-    "vue-module-demi": "^0.0.4",
-    "vue-reactivity-fantasy": "^0.0.7"
+    "vue-module-demi": "^0.0.5",
+    "vue-reactivity-fantasy": "^0.0.8"
   },
   "devDependencies": {
     "bumpp": "^9.0.0",
