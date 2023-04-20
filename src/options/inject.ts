@@ -31,7 +31,7 @@ export function createContext<T = any>(
   injectionKey?: string | symbol
 ): Context<T> {
   const key = createInjectionKey<Ref<T>>(injectionKey ?? Symbol())
-  const use = () => inject(key)
+  const use = (_defaultValue?: Ref<T>) => inject(key, _defaultValue ?? computed(() => defaultValue))
   const provide = (value: Ref<T>) => coreProvide(key, value)
 
   const Provider = defineComponent({
