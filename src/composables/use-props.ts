@@ -1,6 +1,16 @@
-import { camelize } from '@vue/shared'
+import { camelize, hyphenate } from '@vue/shared'
 import { computed, getCurrentInstance, shallowReactive, watchEffect } from 'vue'
 import { isVue2 } from 'vue-module-demi'
+
+export const getAllPossibleProps = (keys: string[]) => {
+  const allKeys = new Set<string>()
+  for (const key of keys) {
+    allKeys.add(key)
+    allKeys.add(camelize(key))
+    allKeys.add(hyphenate(key))
+  }
+  return allKeys.values()
+}
 
 // Handle the situation that vue can only receive `props` by passing `options.props`
 export function useProps<T>(currentInstance = getCurrentInstance()): T {
