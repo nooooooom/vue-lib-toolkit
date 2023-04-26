@@ -9,7 +9,7 @@ export const getAllPossibleProps = (keys: string[]) => {
     allKeys.add(camelize(key))
     allKeys.add(hyphenate(key))
   }
-  return allKeys.values()
+  return [...allKeys]
 }
 
 // Handle the situation that vue can only receive `props` by passing `options.props`
