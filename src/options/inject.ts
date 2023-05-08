@@ -31,11 +31,12 @@ export function createContext<T = any>(
   injectionKey?: string | symbol
 ): Context<T> {
   const key = createInjectionKey<Ref<T>>(injectionKey ?? Symbol())
+  const keyName = typeof key === 'symbol' ? key.description : key
   const use = (_defaultValue?: Ref<T>) => inject(key, _defaultValue ?? computed(() => defaultValue))
   const provide = (value: Ref<T>) => coreProvide(key, value)
 
   const Provider = defineComponent({
-    name: `${key.toString()}Provider`,
+    name: `${keyName}Provider`,
     props: {
       value: required(definePropType<T>())
     },
@@ -46,7 +47,7 @@ export function createContext<T = any>(
   })
 
   const Consumer = defineComponent({
-    name: `${key.toString()}Consumer`,
+    name: `${keyName}Consumer`,
     setup(props, { slots }) {
       const value = use()!
       return () => slots.default?.(value.value)
