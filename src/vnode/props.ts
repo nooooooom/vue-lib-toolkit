@@ -13,7 +13,7 @@ import { cloneVNode as leading_cloneVNode } from 'vue-module-demi'
 import { isVue2 } from '../version'
 import { isVNode } from './types'
 
-export const cloneVNode = isVue2 ? legacy_cloneVNode : leading_cloneVNode
+export const cloneVNode = isVue2 ? legacy_cloneVNode : leading_cloneVNode!
 
 export function resolveVNodeType<T = any>(vnode: VNode): T {
   return isVue2 ? (vnode as any).tag : vnode.type
@@ -180,18 +180,20 @@ function legacy_cloneVNode(_vnode: VNode, extraProps?: LegacyVNodeData | null, m
     vnode.tag,
     mergedProps,
     vnode.children && vnode.children.slice(),
+    vnode.text,
     vnode.elm,
     vnode.context,
     vnode.componentOptions,
     vnode.asyncFactory
   )
   cloned.ns = vnode.ns
-  cloned.fnContext = vnode.fnContext
-  cloned.fnOptions = vnode.fnOptions
-  cloned.fnScopeId = vnode.fnScopeId
   cloned.key = cloned.key ?? vnode.key
   cloned.isStatic = vnode.isStatic
   cloned.isComment = vnode.isComment
+  cloned.fnContext = vnode.fnContext
+  cloned.fnOptions = vnode.fnOptions
+  cloned.fnScopeId = vnode.fnScopeId
+  cloned.asyncMeta = vnode.asyncMeta
   cloned.isCloned = true
 
   return cloned
