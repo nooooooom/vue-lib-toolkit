@@ -35,7 +35,7 @@ export interface SyncContext<T = any> extends ContextComponents<T> {
   provide: (value: Ref<T>) => void
 }
 
-export type Context<T = any, Sync extends boolean = false> = Sync extends false
+export type Context<T = any, Sync extends boolean = false> = Sync extends true
   ? SyncContext<T>
   : RegularContext<T>
 
@@ -54,7 +54,7 @@ export function createContext<T = any, Sync extends boolean = false>(
   injectionKey?: string | symbol,
   sync?: Sync
 ): Context<T, Sync> {
-  type ContextValue = Sync extends false ? Ref<T> : T
+  type ContextValue = Sync extends true ? Ref<T> : T
 
   const key = createInjectionKey<ContextValue>(injectionKey ?? Symbol())
   const keyName = typeof key === 'symbol' ? key.description : key
