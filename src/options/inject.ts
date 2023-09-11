@@ -45,7 +45,7 @@ export function createContext<T = any>(
   sync?: false
 ): Context<T, false>
 export function createContext<T = any>(
-  defaultValue: T,
+  defaultValue: T | undefined,
   injectionKey: string | symbol | undefined,
   sync: true
 ): Context<T, true>
