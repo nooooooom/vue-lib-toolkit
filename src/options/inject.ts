@@ -18,22 +18,54 @@ interface ProviderProps<T> {
 }
 export type Provider<T> = DefineComponent<ProviderProps<T>>
 
-export interface Context<T = any> {
-  key: InjectionKey<Ref<T>>
-  use: () => Ref<T> | undefined
-  provide: (value: Ref<T>) => void
+interface ContextComponents<T = any> {
   Provider: DefineComponent<ProviderProps<T>>
   Consumer: DefineComponent
 }
 
+export interface RegularContext<T = any> extends ContextComponents<T> {
+  key: InjectionKey<T>
+  use: () => T | undefined
+  provide: (value: T) => void
+}
+
+export interface SyncContext<T = any> extends ContextComponents<T> {
+  key: InjectionKey<Ref<T>>
+  use: () => Ref<T> | undefined
+  provide: (value: Ref<T>) => void
+}
+
+export type Context<T = any, Sync extends boolean = false> = Sync extends false
+  ? SyncContext<T>
+  : RegularContext<T>
+
 export function createContext<T = any>(
   defaultValue?: T,
-  injectionKey?: string | symbol
-): Context<T> {
-  const key = createInjectionKey<Ref<T>>(injectionKey ?? Symbol())
+  injectionKey?: string | symbol,
+  sync?: false
+): Context<T, false>
+export function createContext<T = any>(
+  defaultValue: T,
+  injectionKey: string | symbol | undefined,
+  sync: true
+): Context<T, true>
+export function createContext<T = any, Sync extends boolean = false>(
+  defaultValue?: T,
+  injectionKey?: string | symbol,
+  sync?: Sync
+): Context<T, Sync> {
+  type ContextValue = Sync extends false ? Ref<T> : T
+
+  const key = createInjectionKey<ContextValue>(injectionKey ?? Symbol())
   const keyName = typeof key === 'symbol' ? key.description : key
-  const use = (_defaultValue?: Ref<T>) => inject(key, _defaultValue ?? computed(() => defaultValue))
-  const provide = (value: Ref<T>) => coreProvide(key, value)
+
+  const use = (_defaultValue?: ContextValue) =>
+    inject(
+      key,
+      _defaultValue ?? ((sync ? computed(() => defaultValue) : defaultValue) as ContextValue)
+    )
+
+  const provide = (value: ContextValue) => coreProvide(key, value)
 
   const Provider = defineComponent({
     name: `${keyName}Provider`,
@@ -41,7 +73,12 @@ export function createContext<T = any>(
       value: required(definePropType<T>())
     },
     setup(props, { slots }) {
-      provide(computed(() => (props as ProviderProps<T>).value ?? (defaultValue as T)))
+      provide(
+        (sync
+          ? computed(() => (props as ProviderProps<T>).value ?? (defaultValue as T))
+          : (props as ProviderProps<T>).value) as ContextValue
+      )
+
       return () => slots.default?.()
     }
   })
@@ -50,7 +87,8 @@ export function createContext<T = any>(
     name: `${keyName}Consumer`,
     setup(props, { slots }) {
       const value = use()!
-      return () => slots.default?.(value.value)
+
+      return () => slots.default?.(sync ? (value as any as Ref<T>).value : value)
     }
   })
 
@@ -60,5 +98,5 @@ export function createContext<T = any>(
     provide,
     Provider,
     Consumer
-  } as unknown as Context<T>
+  } as any as Context<T, Sync>
 }
