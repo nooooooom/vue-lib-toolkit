@@ -19,15 +19,23 @@ export type ResolvePropConstructor<T> = T extends string
   ? ObjectConstructor
   : any
 
+export type ResolvePropType<T> =
+  | ResolvePropConstructor<T>
+  | ResolvePropConstructor<T>[]
+  | true
+  | null
+
 export type ResolvePropOptions<T> = {
-  [K in keyof T]-?: {
-    type: ResolvePropConstructor<NonNullable<T[K]>>
-    required: Partial<Pick<T, K>> extends Pick<T, K> ? true : false
-  }
+  [K in keyof T]-?:
+    | {
+        type: ResolvePropConstructor<NonNullable<T[K]>>
+        required: Partial<Pick<T, K>> extends Pick<T, K> ? true : false
+      }
+    | ResolvePropType<NonNullable<T[K]>>
 }
 
 export const definePropType = <T>(
-  type?: ResolvePropConstructor<T> | ResolvePropConstructor<T>[] | true | null
+  type?: ResolvePropType<T> | { type: ResolvePropType<T> }
 ): PropType<T> => type as PropType<T>
 
 export type ComponentObjectPropsOptions = ComponentPropsOptions & Record<string, any>
