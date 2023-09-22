@@ -1,7 +1,8 @@
-import { ComputedRef, getCurrentInstance, onMounted, onUpdated, ref, VNode } from 'vue-module-demi'
+import { ComputedRef, onMounted, onUpdated, ref, VNode } from 'vue-module-demi'
 import { useComputed, useEffect } from 'vue-reactivity-fantasy'
 import { resolveVNode } from '../vnode'
 import { useLifecycleTrack } from './use-lifecycle-track'
+import { getCurrentInstance } from './utils'
 
 export function useVNode<T extends VNode = VNode>(
   instance = getCurrentInstance()

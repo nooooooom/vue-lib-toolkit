@@ -1,6 +1,7 @@
 import { camelize, hyphenate } from '@vue/shared'
-import { computed, getCurrentInstance, shallowReactive, watchEffect } from 'vue'
+import { computed, shallowReactive, watchEffect } from 'vue'
 import { isVue2 } from 'vue-module-demi'
+import { getCurrentInstance } from './utils'
 
 export const getAllPossibleProps = (keys: string[]) => {
   const allKeys = new Set<string>()
