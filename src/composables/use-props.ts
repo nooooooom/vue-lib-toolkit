@@ -19,7 +19,7 @@ export function useProps<T>(currentInstance = getCurrentInstance()): T {
 
   const updateProps = computed(() => {
     const attrs = {} as Record<string, any>
-    const $attrs = currentInstance!.proxy?.$attrs
+    const $attrs = isVue2 ? currentInstance?.$attrs : currentInstance?.proxy.$attrs
     if ($attrs) {
       for (const attr in $attrs) {
         // make a backup copy of attrs in props format
@@ -29,12 +29,12 @@ export function useProps<T>(currentInstance = getCurrentInstance()): T {
 
     return {
       ...attrs,
-      ...(isVue2 ? (currentInstance!.proxy as any)?._props : currentInstance?.props)
+      ...(isVue2 ? currentInstance?._props : currentInstance?.props)
     }
   })
 
   if (isVue2) {
-    const set = (currentInstance?.proxy as any).$set
+    const set = (currentInstance as any).$set
     watchEffect(
       () => {
         const updatePropsValue = updateProps.value
